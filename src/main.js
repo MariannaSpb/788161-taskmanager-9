@@ -287,4 +287,5 @@ for (let i = 0; i < CARD_COUNT; i++) {
   renderComponents(getCardElement(), taskList);
 }
 
+
 renderComponents(getLoadBtn(`load more`), taskContainer);
