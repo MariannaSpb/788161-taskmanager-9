@@ -1,67 +1,7 @@
 'use strict';
-
 const mainContainer = document.querySelector(`.main`);
 const menuContainer = mainContainer.querySelector(`.main__control`);
 const CARD_COUNT = 3;
-
-const FILTER__ELEMENTS = [
-  {
-    id: `filter__all`,
-    text: `All `,
-    className: `all-count`,
-    amount: 13,
-    checked: true,
-    disabled: false
-  },
-  {
-    id: `filter__overdue`,
-    text: `Overdue `,
-    className: `overdue`,
-    amount: 0,
-    checked: false,
-    disabled: true
-  },
-  {
-    id: `filter__today`,
-    text: `Today `,
-    className: `today`,
-    amount: 0,
-    checked: false,
-    disabled: true
-  },
-  {
-    id: `filter__favorites`,
-    text: `Favorites `,
-    className: `favorites`,
-    amount: 1,
-    checked: false,
-    disabled: false
-  },
-  {
-    id: `filter__repeating`,
-    text: `Repeating `,
-    className: `repeating`,
-    amount: 1,
-    checked: false,
-    disabled: false
-  },
-  {
-    id: `filter__tags`,
-    text: `Tags `,
-    className: `tags`,
-    amount: 1,
-    checked: false,
-    disabled: false
-  },
-  {
-    id: `filter__archive`,
-    text: `Archive `,
-    className: `archive`,
-    amount: 115,
-    checked: false,
-    disabled: false
-  }
-];
 
 const getMenu = () => {
   return `<section class="control__btn-wrap">
@@ -74,7 +14,6 @@ const getMenu = () => {
 </section>`;
 };
 
-
 const getSearchArea = () => {
   return `<section class="main__search search container">
     <input type="text" id="search__input" class="search__input"
@@ -83,32 +22,24 @@ const getSearchArea = () => {
   </section>`;
 };
 
-
-const getFilterElement = (id, text, className, amount, isChecked = false, isDisabled = false) => {
-  return `<input type="radio" id=${id} class="filter__input visually-hidden" name="filter"
-  ${isChecked ? `checked` : ``}
-  ${isDisabled ? `disabled` : ``}
-  />
-  <label for=${id} class="filter__label">${text}<span class="filter__${className}-count">${amount}</span></label>`;
+const getFilterElement = () => {
+  return `<section class="main__filter filter container">
+  <input type="radio" id="filter__all" class="filter__input visually-hidden" name="filter" checked="">
+  <label for="filter__all" class="filter__label">All <span class="filter__all-count">13</span></label>
+  <input type="radio" id="filter__overdue" class="filter__input visually-hidden" name="filter" disabled="">
+  <label for="filter__overdue" class="filter__label">Overdue <span class="filter__overdue-count">0</span></label>
+  <input type="radio" id="filter__today" class="filter__input visually-hidden" name="filter" disabled="">
+  <label for="filter__today" class="filter__label">Today <span class="filter__today-count">0</span></label>
+  <input type="radio" id="filter__favorites" class="filter__input visually-hidden" name="filter">
+  <label for="filter__favorites" class="filter__label">Favorites <span class="filter__favorites-count">1</span></label>
+  <input type="radio" id="filter__repeating" class="filter__input visually-hidden" name="filter">
+  <label for="filter__repeating" class="filter__label">Repeating <span class="filter__repeating-count">1</span></label>
+  <input type="radio" id="filter__tags" class="filter__input visually-hidden" name="filter">
+  <label for="filter__tags" class="filter__label">Tags <span class="filter__tags-count">1</span></label>
+  <input type="radio" id="filter__archive" class="filter__input visually-hidden" name="filter">
+  <label for="filter__archive" class="filter__label">Archive <span class="filter__archive-count">115</span></label>
+</section>`;
 };
-
-const generateFilterList = (collection) => {
-  // const filters = [];
-  // elements.forEach((element) => {
-  //   filters.push(getFilterElement(element.id, element.text, element.className, element.amount, element.checked, element.disabled));
-  // });
-  const filters = collection.map((item) => {
-    return getFilterElement(item.id, item.text, item.className, item.amount, item.checked, item.disabled);
-  });
-
-  return filters.join(``);
-};
-
-
-const filterContainer = document.createElement(`section`);
-filterContainer.classList.add(`main__filter`, `filter`, `container`);
-
-mainContainer.appendChild(filterContainer);
 
 
 const getBoardFilterList = () => {
@@ -123,7 +54,6 @@ const getBoardFilterList = () => {
   </section>
   `;
 };
-
 
 const getLoadBtn = (text) => {
   return `<button class="load-more" type="button">${text}</button>`;
@@ -140,7 +70,6 @@ const getControl = () => {
   </button>
 </div>`;
 };
-
 const getColorBar = () => {
   return `<div class="card__color-bar">
   <svg class="card__color-bar-wave" width="100%" height="10">
@@ -148,7 +77,6 @@ const getColorBar = () => {
   </svg>
 </div>`;
 };
-
 const getTextareaWrap = (text) => {
   return `<div class="card__textarea-wrap">
   <label>
@@ -156,7 +84,6 @@ const getTextareaWrap = (text) => {
   </label>
 </div>`;
 };
-
 
 const getCardElement = () => {
   return `<article class="card card--black">
@@ -226,24 +153,21 @@ const getCardFormElement = () => {
               <div class="card__inner">
                 ${getControl()}
                 ${getColorBar()}
-                ${getTextareaWrap(`Here is a card with filled data.`)}
+                ${getTextareaWrap(`Example default task with default color.`)}
                 <div class="card__settings">
                   <div class="card__details">
                     <div class="card__dates">
                       <button class="card__date-deadline-toggle" type="button">
                         date: <span class="card__date-status">yes</span>
                       </button>
-
                       <fieldset class="card__date-deadline">
                         <label class="card__input-deadline-wrap">
                           <input class="card__date" type="text" placeholder="" name="date" value="23 September 11:15 PM">
                         </label>
                       </fieldset>
-
                       <button class="card__repeat-toggle" type="button">
                         repeat:<span class="card__repeat-status">yes</span>
                       </button>
-
                       <fieldset class="card__repeat-days">
                         <div class="card__repeat-days-inner">
                           <input class="visually-hidden card__repeat-day-input" type="checkbox" id="repeat-mo-4" name="repeat" value="mo">
@@ -263,7 +187,6 @@ const getCardFormElement = () => {
                         </div>
                       </fieldset>
                     </div>
-
                     <div class="card__hashtag">
                       <div class="card__hashtag-list">
                         <span class="card__hashtag-inner">
@@ -275,7 +198,6 @@ const getCardFormElement = () => {
                             delete
                           </button>
                         </span>
-
                         <span class="card__hashtag-inner">
                           <input type="hidden" name="hashtag" value="repeat" class="card__hashtag-hidden-input">
                           <p class="card__hashtag-name">
@@ -285,7 +207,6 @@ const getCardFormElement = () => {
                             delete
                           </button>
                         </span>
-
                         <span class="card__hashtag-inner">
                           <input type="hidden" name="hashtag" value="repeat" class="card__hashtag-hidden-input">
                           <p class="card__hashtag-name">
@@ -296,13 +217,11 @@ const getCardFormElement = () => {
                           </button>
                         </span>
                       </div>
-
                       <label>
                         <input type="text" class="card__hashtag-input" name="hashtag-input" placeholder="Type new hashtag here">
                       </label>
                     </div>
                   </div>
-
                   <div class="card__colors-inner">
                     <h3 class="card__colors-title">Color</h3>
                     <div class="card__colors-wrap">
@@ -333,22 +252,16 @@ const renderComponents = (getComponents, container) => {
   container.insertAdjacentHTML(`beforeend`, getComponents);
 };
 
-
 renderComponents(getMenu(), menuContainer);
 renderComponents(getSearchArea(), mainContainer);
-mainContainer.appendChild(filterContainer);
-// renderComponents(getFilterElement(), mainContainer);
-renderComponents(generateFilterList(FILTER__ELEMENTS), filterContainer);
-
+renderComponents(getFilterElement(), mainContainer);
 renderComponents(getBoardFilterList(), mainContainer);
-
 const taskContainer = document.querySelector(`.board`);
 const taskList = taskContainer.querySelector(`.board__tasks`);
-renderComponents(getCardFormElement(), taskList);
 
+renderComponents(getCardFormElement(), taskList);
 for (let i = 0; i < CARD_COUNT; i++) {
   renderComponents(getCardElement(), taskList);
 }
-
 
 renderComponents(getLoadBtn(`load more`), taskContainer);
