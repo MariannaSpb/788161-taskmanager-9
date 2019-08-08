@@ -1,7 +1,16 @@
 'use strict';
+const CARD_COUNT = 3;
 const mainContainer = document.querySelector(`.main`);
 const menuContainer = mainContainer.querySelector(`.main__control`);
-const CARD_COUNT = 3;
+
+
+const generationCard = (count) => {
+  const cardArray = [];
+  for (let i = 0; i < count; i++) {
+    cardArray.push(getCardElement());
+  }
+  return cardArray.join(` `);
+};
 
 const getMenu = () => {
   return `<section class="control__btn-wrap">
@@ -41,6 +50,9 @@ const getFilterElement = () => {
 </section>`;
 };
 
+const getLoadBtn = (text) => {
+  return `<button class="load-more" type="button">${text}</button>`;
+};
 
 const getBoardFilterList = () => {
   return `
@@ -50,14 +62,15 @@ const getBoardFilterList = () => {
       <a href="#" class="board__filter">SORT BY DATE up</a>
       <a href="#" class="board__filter">SORT BY DATE down</a>
     </div>
-    <div class="board__tasks"></div>
+    <div class="board__tasks">
+    ${getCardFormElement()}
+    ${generationCard(CARD_COUNT)}
+    </div>
+    ${getLoadBtn(`load more`)}
   </section>
   `;
 };
 
-const getLoadBtn = (text) => {
-  return `<button class="load-more" type="button">${text}</button>`;
-};
 
 // внутренности карточки
 const getControl = () => {
@@ -85,6 +98,8 @@ const getTextareaWrap = (text) => {
 </div>`;
 };
 
+
+// создание одной карточки
 const getCardElement = () => {
   return `<article class="card card--black">
   <div class="card__form">
@@ -108,9 +123,7 @@ const getCardElement = () => {
           <use xlink:href="#wave"></use>
         </svg>
       </div>
-      <div class="card__textarea-wrap">
-        <p class="card__text">Example default task with default color.</p>
-      </div>
+      ${getTextareaWrap(`Example default task with default color.`)}
       <div class="card__settings">
         <div class="card__details">
           <div class="card__dates">
@@ -147,13 +160,14 @@ const getCardElement = () => {
 </article>`;
 };
 
+// форма редактирования карточки
 const getCardFormElement = () => {
   return `<article class="card card card--edit card--yellow card--repeat>
             <form class="card__form" method="get">
               <div class="card__inner">
                 ${getControl()}
                 ${getColorBar()}
-                ${getTextareaWrap(`Example default task with default color.`)}
+                ${getTextareaWrap(`Here is a card with filled data`)}
                 <div class="card__settings">
                   <div class="card__details">
                     <div class="card__dates">
@@ -256,12 +270,3 @@ renderComponents(getMenu(), menuContainer);
 renderComponents(getSearchArea(), mainContainer);
 renderComponents(getFilterElement(), mainContainer);
 renderComponents(getBoardFilterList(), mainContainer);
-const taskContainer = document.querySelector(`.board`);
-const taskList = taskContainer.querySelector(`.board__tasks`);
-
-renderComponents(getCardFormElement(), taskList);
-for (let i = 0; i < CARD_COUNT; i++) {
-  renderComponents(getCardElement(), taskList);
-}
-
-renderComponents(getLoadBtn(`load more`), taskContainer);
