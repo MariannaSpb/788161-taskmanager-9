@@ -71,7 +71,6 @@ const getBoardFilterList = () => {
   `;
 };
 
-
 // внутренности карточки
 const getControl = () => {
   return `<div class="card__control">
@@ -97,7 +96,6 @@ const getTextareaWrap = (text) => {
   </label>
 </div>`;
 };
-
 
 // создание одной карточки
 const getCardElement = () => {
